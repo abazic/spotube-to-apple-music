@@ -18,12 +18,6 @@
 package org.spotube.spotube.modules.settings.components
 
 
-import org.spotube.millennium.composables.MillenniumDialogHeader
-import org.spotube.millennium.composables.MillenniumDialogTitle
-import org.spotube.millennium.composables.MillenniumDialogClose
-import org.spotube.millennium.composables.MillenniumDialogBody
-import org.spotube.millennium.composables.MillenniumDialogFooter
-import org.spotube.millennium.composables.MillenniumDialogDescription
 import androidx.compose.foundation.layout.Box
 import com.composeunstyled.currentWindowWidthBreakpoint
 import org.spotube.millennium.adaptive.WindowBreakpoints
@@ -31,7 +25,6 @@ import androidx.compose.ui.Alignment
 import org.spotube.millennium.composables.MillenniumIcon
 import org.spotube.millennium.composables.MillenniumButton
 import org.spotube.millennium.composables.MillenniumButtonStyle
-import org.spotube.millennium.composables.MillenniumDialog
 import org.spotube.millennium.composables.MillenniumRadioGroup
 import org.spotube.millennium.composables.MillenniumSwitch
 import org.spotube.millennium.composables.MillenniumTextField
@@ -55,6 +48,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.spotube.spotube.core.ui.component.AdaptiveDialogBottomSheet
 import org.spotube.spotube.core.ui.component.AdaptiveDropdownBottomSheet
 import org.spotube.spotube.core.ui.component.AdaptiveMenuItem
 import org.spotube.spotube.resources.iconsax.Iconsax
@@ -149,10 +143,19 @@ internal fun <T> SelectionSettingCard(
 
         if (!isWideLayout && isDialogOpen) {
             val labels = options.map { optionLabel(it) }
-            MillenniumDialog(
-                visible = true,
-                onDismissRequest = { isDialogOpen = false },
-                title = dialogTitle
+            AdaptiveDialogBottomSheet(
+                onDismiss = { isDialogOpen = false },
+                title = { Text(dialogTitle, style = AppTheme.typography.titleMedium) },
+                dialogTitle = dialogTitle,
+                actions = {
+                    MillenniumButton(
+                        onClick = { isDialogOpen = false },
+                        modifier = Modifier.fillMaxWidth(),
+                        style = MillenniumButtonStyle.Quiet
+                    ) {
+                        Text(stringResource(Res.string.common_close))
+                    }
+                }
             ) {
                 MillenniumRadioGroup(
                     value = selectedOption,
@@ -163,12 +166,6 @@ internal fun <T> SelectionSettingCard(
                     options = options,
                     label = dialogTitle,
                     optionLabel = { option -> labels[options.indexOf(option)] })
-                MillenniumButton(
-                    onClick = { isDialogOpen = false },
-                    style = MillenniumButtonStyle.Quiet
-                ) {
-                    Text(stringResource(Res.string.common_close))
-                }
             }
         }
     }
@@ -244,42 +241,51 @@ internal fun TextInputSettingCard(
             val normalizedValue = normalize(draft)
             val errorMessage = validate(normalizedValue)
 
-            MillenniumDialog(visible = true, onDismissRequest = { isDialogOpen = false }) {
-                MillenniumDialogHeader {
-                    MillenniumDialogTitle(dialogTitle)
-                    MillenniumDialogClose()
-                }
-                MillenniumDialogBody {
-                    if (dialogDescription != null) {
-                        MillenniumDialogDescription(dialogDescription)
-                    }
-                    MillenniumTextField(
-                        state = dialogState,
-                        label = title,
+            AdaptiveDialogBottomSheet(
+                onDismiss = { isDialogOpen = false },
+                title = { Text(dialogTitle, style = AppTheme.typography.titleMedium) },
+                dialogTitle = dialogTitle,
+                actions = {
+                    Column(
                         modifier = Modifier.fillMaxWidth(),
-                        placeholder = placeholder,
-                        error = errorMessage
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        MillenniumButton(
+                            onClick = {
+                                if (errorMessage == null) {
+                                    onValueSaved(normalizedValue)
+                                    isDialogOpen = false
+                                }
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                            enabled = errorMessage == null
+                        ) {
+                            Text(stringResource(Res.string.common_save))
+                        }
+                        MillenniumButton(
+                            onClick = { isDialogOpen = false },
+                            modifier = Modifier.fillMaxWidth(),
+                            style = MillenniumButtonStyle.Secondary
+                        ) {
+                            Text(stringResource(Res.string.common_cancel))
+                        }
+                    }
+                }
+            ) {
+                if (dialogDescription != null) {
+                    Text(
+                        dialogDescription,
+                        style = AppTheme.typography.bodySmall,
+                        color = AppTheme.colors.onSurfaceVariant
                     )
                 }
-                MillenniumDialogFooter {
-                    MillenniumButton(
-                        onClick = { isDialogOpen = false },
-                        style = MillenniumButtonStyle.Secondary
-                    ) {
-                        Text(stringResource(Res.string.common_cancel))
-                    }
-                    MillenniumButton(
-                        onClick = {
-                            if (errorMessage == null) {
-                                onValueSaved(normalizedValue)
-                                isDialogOpen = false
-                            }
-                        },
-                        enabled = errorMessage == null
-                    ) {
-                        Text(stringResource(Res.string.common_save))
-                    }
-                }
+                MillenniumTextField(
+                    state = dialogState,
+                    label = title,
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = placeholder,
+                    error = errorMessage
+                )
             }
         }
     }
