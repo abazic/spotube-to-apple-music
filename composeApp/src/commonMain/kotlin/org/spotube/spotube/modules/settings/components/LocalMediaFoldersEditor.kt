@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.composeunstyled.Text
+import com.composeunstyled.currentWindowWidthBreakpoint
+import org.spotube.millennium.adaptive.WindowBreakpoints
 import org.spotube.spotube.core.ui.component.VerticalScrollbar
 import org.spotube.spotube.core.ui.theming.AppTheme
 import org.spotube.spotube.modules.settings.LocalMediaFolderRowUi
@@ -177,19 +179,43 @@ internal fun LocalMediaFoldersEditorContent(
             style = AppTheme.typography.bodySmall, color = AppTheme.colors.error
         )
         MillenniumSeparator()
-        Row(
-            Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
-        ) {
-            MillenniumButton(
-                onClick = onCancel,
-                enabled = !state.isSaving,
-                style = MillenniumButtonStyle.Secondary
+        if (currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium) {
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
             ) {
-                Text(stringResource(Res.string.common_cancel))
+                MillenniumButton(
+                    onClick = onCancel,
+                    enabled = !state.isSaving,
+                    style = MillenniumButtonStyle.Secondary
+                ) {
+                    Text(stringResource(Res.string.common_cancel))
+                }
+                MillenniumButton(onClick = onSave, enabled = state.canSave, loading = state.isSaving) {
+                    Text(stringResource(Res.string.common_save))
+                }
             }
-            MillenniumButton(onClick = onSave, enabled = state.canSave, loading = state.isSaving) {
-                Text(stringResource(Res.string.common_save))
+        } else {
+            Column(
+                Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                MillenniumButton(
+                    onClick = onSave,
+                    enabled = state.canSave,
+                    loading = state.isSaving,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(Res.string.common_save))
+                }
+                MillenniumButton(
+                    onClick = onCancel,
+                    enabled = !state.isSaving,
+                    style = MillenniumButtonStyle.Secondary,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(stringResource(Res.string.common_cancel))
+                }
             }
         }
     }
