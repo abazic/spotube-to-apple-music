@@ -351,6 +351,12 @@ This section is updated alongside each implementation batch. The specification a
 - **Validation:** source-level review only; Gradle compilation and runtime layout checks remain outstanding.
 
 
+### Responsive sleep timer dialog actions
+
+- **Sleep timer dialog:** action buttons now use equal-width horizontal placement on medium/large windows and a full-width vertical stack on narrow windows. Start is placed first on narrow layouts; Cancel remains conditional on an active timer.
+- **Behavior preservation:** start validation, cancel, close/dismiss callbacks, and timer state remain unchanged.
+- **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
+
 ### Responsive installed-plugin metadata
 
 - **Installed plugin rows:** ability labels and author metadata now use a wrapping flow layout instead of a single rigid row. On narrow cards, metadata can continue on a second line rather than competing with the plugin title and trailing actions.
