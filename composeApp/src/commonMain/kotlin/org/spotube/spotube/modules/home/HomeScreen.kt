@@ -400,18 +400,18 @@ private fun HomeSection(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
+        Text(
+            text = title,
+            style = AppTheme.typography.headlineSmall,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(horizontal = 20.dp)
+        )
         if (!subtitle.isNullOrEmpty()) Text(
             text = subtitle,
             style = AppTheme.typography.bodySmall.copy(
                 color = AppTheme.colors.onSurfaceVariant,
                 fontWeight = FontWeight.Medium
             ),
-            modifier = Modifier.padding(horizontal = 20.dp)
-        )
-        Text(
-            text = title,
-            style = AppTheme.typography.headlineSmall,
-            fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
