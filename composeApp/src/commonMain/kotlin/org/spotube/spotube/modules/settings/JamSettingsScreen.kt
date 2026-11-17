@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.spotube.spotube.core.ui.component.ApplicationMainBar
+import org.spotube.spotube.core.ui.theming.AppTheme
 import org.spotube.spotube.modules.settings.components.TextInputSettingCard
 import org.spotube.spotube.modules.settings.sections.JamNameSettingCard
 import org.spotube.spotube.modules.settings.sections.SettingsItemIcon
@@ -146,7 +147,9 @@ internal fun JamSettingsContent(
                     text = stringResource(Res.string.settings_jam_server_note),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 4.dp))
+                        .padding(horizontal = 16.dp, vertical = 4.dp),
+                    style = AppTheme.typography.bodySmall,
+                    color = AppTheme.colors.onSurfaceVariant)
             }
         }
     }
