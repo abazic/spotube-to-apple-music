@@ -362,3 +362,9 @@ This section is updated alongside each implementation batch. The specification a
 - **Installed plugin rows:** ability labels and author metadata now use a wrapping flow layout instead of a single rigid row. On narrow cards, metadata can continue on a second line rather than competing with the plugin title and trailing actions.
 - **Behavior preservation:** plugin detail navigation, remove action, removing indicator, and all plugin state remain unchanged.
 - **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
+
+### Compact track-details metadata layout
+
+- **Track details dialog:** metadata rows now stack the label above the value on compact windows. Medium/large layouts retain the existing two-column label/value arrangement.
+- **Behavior preservation:** metadata fields, values, ordering, loading/error states, and dialog dismissal remain unchanged; this is a layout-only adjustment.
+- **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
