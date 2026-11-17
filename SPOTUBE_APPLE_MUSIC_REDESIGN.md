@@ -332,3 +332,8 @@ This section is updated alongside each implementation batch. The specification a
 - **Text settings:** compact layouts now use the shared adaptive bottom sheet for editing, with the existing validation, save callback, cancel action, and error presentation retained.
 - **Consistency:** both editors inherit the shared sheet scrolling, title spacing, and adaptive dialog behavior rather than using separate modal styling.
 - **Validation:** source-level diff reviewed; Gradle compilation/checks remain pending.
+
+### Home section hierarchy polish
+
+- **Home discovery sections:** moved each section title ahead of its optional description so the primary label leads and supporting copy reads as metadata. Existing content, ordering, lazy-list behavior, and item callbacks are unchanged.
+- **Validation:** source-level review only; Gradle and runtime checks remain outstanding in this GitHub-connected environment.
