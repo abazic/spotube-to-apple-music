@@ -374,3 +374,7 @@ This section is updated alongside each implementation batch. The specification a
 - **Local media folders editor:** Save and Cancel actions now stack as full-width buttons on compact windows, with Save first. Medium/large layouts retain the trailing horizontal action row.
 - **Behavior preservation:** folder selection/removal, save eligibility, saving state, and dismiss callbacks are unchanged.
 - **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
+
+### Settings — responsive appearance palette dialog
+- The palette dialog stacks its preview actions and Save/Cancel footer on compact windows; medium and larger windows retain horizontal actions.
+- Palette selection, preview-only controls, save/cancel callbacks, and dismissal behavior are unchanged.
