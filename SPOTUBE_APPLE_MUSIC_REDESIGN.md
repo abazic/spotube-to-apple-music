@@ -325,3 +325,10 @@ This section is updated alongside each implementation batch. The specification a
 - **Plugin install/permission dialogs:** action buttons now use a horizontal equal-width pair on medium/large windows and a full-width vertical stack on narrow windows. The primary action appears first on narrow layouts, followed by the secondary action.
 - **Behavior preservation:** button callbacks, enabled/loading states, labels, and confirmation/cancel semantics are unchanged.
 - **Validation:** source-level diff reviewed; Gradle checks remain pending because this session has no local Gradle execution environment.
+
+### Adaptive settings editors
+
+- **Selection settings:** compact layouts now use the shared adaptive bottom sheet for option selection, with the existing radio-group selection callback and close action retained.
+- **Text settings:** compact layouts now use the shared adaptive bottom sheet for editing, with the existing validation, save callback, cancel action, and error presentation retained.
+- **Consistency:** both editors inherit the shared sheet scrolling, title spacing, and adaptive dialog behavior rather than using separate modal styling.
+- **Validation:** source-level diff reviewed; Gradle compilation/checks remain pending.
