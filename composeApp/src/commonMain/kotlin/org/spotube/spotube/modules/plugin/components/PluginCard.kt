@@ -26,6 +26,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.semantics.Role
@@ -153,12 +155,14 @@ internal fun PluginCard(
 }
 
 /** What the plugin does, in its ability colors, then who made it: "Audio · Spotube Team". */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun PluginRowMeta(item: PluginListItem) {
     val plugin = item.plugin
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+    FlowRow(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+        itemVerticalAlignment = Alignment.CenterVertically) {
         plugin.abilities.forEach { ability ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
