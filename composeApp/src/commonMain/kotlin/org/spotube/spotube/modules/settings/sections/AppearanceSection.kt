@@ -47,6 +47,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import com.composeunstyled.currentWindowWidthBreakpoint
+import org.spotube.millennium.adaptive.WindowBreakpoints
 import org.spotube.spotube.core.ui.theming.AppTheme
 import org.spotube.spotube.core.ui.theming.isLightAppearance
 import org.spotube.spotube.modules.settings.SettingsViewModel
@@ -183,17 +185,38 @@ private fun AppearanceSettingCard(
             PalettePreview(draftPalette)
             }
             MillenniumDialogFooter {
-                MillenniumButton(
-                    onClick = { isDialogOpen = false },
-                    style = MillenniumButtonStyle.Secondary) {
-                    MillenniumText(stringResource(Res.string.common_cancel))
-                }
-                MillenniumButton(
-                    onClick = {
-                        onSaved(draftPalette)
-                        isDialogOpen = false
-                    }) {
-                    MillenniumText(stringResource(Res.string.common_save))
+                if (currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium) {
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        MillenniumButton(
+                            onClick = { isDialogOpen = false },
+                            style = MillenniumButtonStyle.Secondary) {
+                            MillenniumText(stringResource(Res.string.common_cancel))
+                        }
+                        MillenniumButton(
+                            onClick = {
+                                onSaved(draftPalette)
+                                isDialogOpen = false
+                            }) {
+                            MillenniumText(stringResource(Res.string.common_save))
+                        }
+                    }
+                } else {
+                    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        MillenniumButton(
+                            onClick = {
+                                onSaved(draftPalette)
+                                isDialogOpen = false
+                            },
+                            modifier = Modifier.fillMaxWidth()) {
+                            MillenniumText(stringResource(Res.string.common_save))
+                        }
+                        MillenniumButton(
+                            onClick = { isDialogOpen = false },
+                            style = MillenniumButtonStyle.Secondary,
+                            modifier = Modifier.fillMaxWidth()) {
+                            MillenniumText(stringResource(Res.string.common_cancel))
+                        }
+                    }
                 }
             }
         }
@@ -256,12 +279,30 @@ private fun PalettePreview(palette: MillenniumPalette) {
             MillenniumText(
                 stringResource(Res.string.settings_preview_label),
                 color = MillenniumTheme.colors.muted)
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                MillenniumButton(onClick = {}) {
-                    MillenniumText(stringResource(Res.string.settings_preview_button))
+            if (currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium) {
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    MillenniumButton(onClick = {}) {
+                        MillenniumText(stringResource(Res.string.settings_preview_button))
+                    }
+                    MillenniumButton(onClick = {}, style = MillenniumButtonStyle.Secondary) {
+                        MillenniumText(stringResource(Res.string.settings_preview_secondary))
+                    }
                 }
-                MillenniumButton(onClick = {}, style = MillenniumButtonStyle.Secondary) {
-                    MillenniumText(stringResource(Res.string.settings_preview_secondary))
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    MillenniumButton(onClick = {}, modifier = Modifier.fillMaxWidth()) {
+                        MillenniumText(stringResource(Res.string.settings_preview_button))
+                    }
+                    MillenniumButton(
+                        onClick = {},
+                        style = MillenniumButtonStyle.Secondary,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        MillenniumText(stringResource(Res.string.settings_preview_secondary))
+                    }
                 }
             }
         }
