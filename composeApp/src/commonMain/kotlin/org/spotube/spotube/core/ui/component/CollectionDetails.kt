@@ -266,7 +266,7 @@ fun CollectionDetails(
             Column {
                 TextWithShimmer(
                     text = title,
-                    style = if (isCompact) AppTheme.typography.bodyLarge else AppTheme.typography.headlineLarge,
+                    style = if (isCompact) AppTheme.typography.titleLarge else AppTheme.typography.headlineLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis)
 
