@@ -156,20 +156,47 @@ fun PlaylistFormSheet(
         dialogTitle = formTitle,
         title = { Text(formTitle, style = AppTheme.typography.headlineSmall) },
         actions = {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)) {
-                MillenniumButton(
-                    onClick = onDismiss,
-                    enabled = !formState.isSubmitting,
-                    style = MillenniumButtonStyle.Secondary) {
-                    Text(stringResource(Res.string.common_cancel))
+            if (isLargeScreen) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
+                ) {
+                    MillenniumButton(
+                        onClick = onDismiss,
+                        enabled = !formState.isSubmitting,
+                        style = MillenniumButtonStyle.Secondary
+                    ) {
+                        Text(stringResource(Res.string.common_cancel))
+                    }
+                    MillenniumButton(
+                        onClick = { onSubmit(currentData) },
+                        enabled = name.isNotBlank() && !formState.isProcessingImage,
+                        loading = formState.isSubmitting
+                    ) {
+                        Text(stringResource(if (isEditing) Res.string.common_save else Res.string.library_playlist_form_create))
+                    }
                 }
-                MillenniumButton(
-                    onClick = { onSubmit(currentData) },
-                    enabled = name.isNotBlank() && !formState.isProcessingImage,
-                    loading = formState.isSubmitting) {
-                    Text(stringResource(if (isEditing) Res.string.common_save else Res.string.library_playlist_form_create))
+            } else {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    MillenniumButton(
+                        onClick = { onSubmit(currentData) },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = name.isNotBlank() && !formState.isProcessingImage,
+                        loading = formState.isSubmitting
+                    ) {
+                        Text(stringResource(if (isEditing) Res.string.common_save else Res.string.library_playlist_form_create))
+                    }
+                    MillenniumButton(
+                        onClick = onDismiss,
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !formState.isSubmitting,
+                        style = MillenniumButtonStyle.Secondary
+                    ) {
+                        Text(stringResource(Res.string.common_cancel))
+                    }
                 }
             }
         }) {
