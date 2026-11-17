@@ -349,3 +349,10 @@ This section is updated alongside each implementation batch. The specification a
 - **Create/edit playlist form:** actions now use a horizontal row on medium/large windows and a full-width vertical stack on narrow windows. The primary Create/Save action is first on narrow layouts, followed by Cancel.
 - **Behavior preservation:** submit and dismiss callbacks, form validation, image-processing guard, submitting/loading state, and labels are unchanged.
 - **Validation:** source-level review only; Gradle compilation and runtime layout checks remain outstanding.
+
+
+### Responsive installed-plugin metadata
+
+- **Installed plugin rows:** ability labels and author metadata now use a wrapping flow layout instead of a single rigid row. On narrow cards, metadata can continue on a second line rather than competing with the plugin title and trailing actions.
+- **Behavior preservation:** plugin detail navigation, remove action, removing indicator, and all plugin state remain unchanged.
+- **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
