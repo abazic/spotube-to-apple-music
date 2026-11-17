@@ -319,3 +319,9 @@ This section is updated alongside each implementation batch. The specification a
 - **Adaptive dropdown sheets:** removed a duplicated separator render in mobile menu rows; each `dividerBefore` item now renders one separator, consistent with desktop dropdowns.
 - **Behavior preservation:** menu callbacks, selection, filtering, dismiss handling, and dialog actions remain unchanged.
 - **Validation:** source-level diff reviewed. `./gradlew :composeApp:check` remains unrun because this GitHub-connected session has no local Gradle execution environment.
+
+### Responsive plugin dialog actions
+
+- **Plugin install/permission dialogs:** action buttons now use a horizontal equal-width pair on medium/large windows and a full-width vertical stack on narrow windows. The primary action appears first on narrow layouts, followed by the secondary action.
+- **Behavior preservation:** button callbacks, enabled/loading states, labels, and confirmation/cancel semantics are unchanged.
+- **Validation:** source-level diff reviewed; Gradle checks remain pending because this session has no local Gradle execution environment.
