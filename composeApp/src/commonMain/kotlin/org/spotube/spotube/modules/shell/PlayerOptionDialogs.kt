@@ -445,18 +445,33 @@ private fun TrackMetadataSection(track: MetadataTrack) {
 @Composable
 private fun DetailRow(label: String, value: String?) {
     if (value.isNullOrBlank()) return
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            label,
-            modifier = Modifier.weight(0.38f),
-            style = AppTheme.typography.labelMedium,
-            color = AppTheme.colors.onSurfaceVariant)
-        Text(
-            value,
-            modifier = Modifier.weight(0.62f),
-            style = AppTheme.typography.bodySmall)
+
+    if (currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                label,
+                modifier = Modifier.weight(0.38f),
+                style = AppTheme.typography.labelMedium,
+                color = AppTheme.colors.onSurfaceVariant)
+            Text(
+                value,
+                modifier = Modifier.weight(0.62f),
+                style = AppTheme.typography.bodySmall)
+        }
+    } else {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(
+                label,
+                style = AppTheme.typography.labelMedium,
+                color = AppTheme.colors.onSurfaceVariant)
+            Text(
+                value,
+                style = AppTheme.typography.bodySmall)
+        }
     }
 }
 
