@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -41,6 +42,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.composeunstyled.currentWindowWidthBreakpoint
+import org.spotube.millennium.adaptive.WindowBreakpoints
 import com.composeunstyled.Text
 import org.spotube.spotube.core.ui.theming.AppTheme
 import org.spotube.spotube.modules.plugin.PluginEntry
@@ -219,7 +222,7 @@ internal fun PluginSectionLabel(text: String, badge: String? = null) {
     }
 }
 
-/** Equal-width secondary + primary action pair. */
+/** Responsive secondary + primary action pair for dialog and bottom-sheet layouts. */
 @Composable
 internal fun PluginDialogActions(
     secondaryLabel: String,
@@ -228,24 +231,70 @@ internal fun PluginDialogActions(
     onPrimary: (() -> Unit)? = null,
     primaryEnabled: Boolean = true,
     primaryLoading: Boolean = false) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-        MillenniumButton(
-            onClick = onSecondary,
-            modifier = Modifier.weight(1f),
-            style = if (primaryLabel != null) MillenniumButtonStyle.Secondary else MillenniumButtonStyle.Primary) {
-            Text(secondaryLabel)
-        }
-        if (primaryLabel != null && onPrimary != null) {
-            MillenniumButton(
-                onClick = onPrimary,
-                enabled = primaryEnabled,
-                loading = primaryLoading,
-                modifier = Modifier.weight(1f),
-                style = MillenniumButtonStyle.Primary) {
-                Text(primaryLabel)
+    val isLargeScreen = currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium
+
+    if (isLargeScreen) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            PluginSecondaryAction(secondaryLabel, onSecondary, Modifier.weight(1f), primaryLabel != null)
+            if (primaryLabel != null && onPrimary != null) {
+                PluginPrimaryAction(
+                    label = primaryLabel,
+                    onClick = onPrimary,
+                    enabled = primaryEnabled,
+                    loading = primaryLoading,
+                    modifier = Modifier.weight(1f))
             }
         }
+    } else {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (primaryLabel != null && onPrimary != null) {
+                PluginPrimaryAction(
+                    label = primaryLabel,
+                    onClick = onPrimary,
+                    enabled = primaryEnabled,
+                    loading = primaryLoading,
+                    modifier = Modifier.fillMaxWidth())
+            }
+            PluginSecondaryAction(
+                label = secondaryLabel,
+                onClick = onSecondary,
+                modifier = Modifier.fillMaxWidth(),
+                hasPrimary = primaryLabel != null)
+        }
+    }
+}
+
+@Composable
+private fun PluginSecondaryAction(
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    hasPrimary: Boolean) {
+    MillenniumButton(
+        onClick = onClick,
+        modifier = modifier,
+        style = if (hasPrimary) MillenniumButtonStyle.Secondary else MillenniumButtonStyle.Primary) {
+        Text(label)
+    }
+}
+
+@Composable
+private fun PluginPrimaryAction(
+    label: String,
+    onClick: () -> Unit,
+    enabled: Boolean,
+    loading: Boolean,
+    modifier: Modifier) {
+    MillenniumButton(
+        onClick = onClick,
+        enabled = enabled,
+        loading = loading,
+        modifier = modifier,
+        style = MillenniumButtonStyle.Primary) {
+        Text(label)
     }
 }
