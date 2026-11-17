@@ -337,3 +337,8 @@ This section is updated alongside each implementation batch. The specification a
 
 - **Home discovery sections:** moved each section title ahead of its optional description so the primary label leads and supporting copy reads as metadata. Existing content, ordering, lazy-list behavior, and item callbacks are unchanged.
 - **Validation:** source-level review only; Gradle and runtime checks remain outstanding in this GitHub-connected environment.
+
+### Collection header typography refinement
+
+- **Album / playlist collection headers:** increased the compact-layout collection title from the body text role to the title role. This strengthens the title-to-metadata hierarchy on narrow screens while retaining the existing desktop scale, line limits, layout, and all actions.
+- **Validation:** source-level review only; Gradle and runtime checks remain outstanding in this GitHub-connected environment.
