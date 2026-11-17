@@ -378,3 +378,7 @@ This section is updated alongside each implementation batch. The specification a
 ### Settings — responsive appearance palette dialog
 - The palette dialog stacks its preview actions and Save/Cancel footer on compact windows; medium and larger windows retain horizontal actions.
 - Palette selection, preview-only controls, save/cancel callbacks, and dismissal behavior are unchanged.
+
+### Settings — Group Jam explanatory note
+- The server note now uses the shared small-body typography and secondary text color, matching other settings descriptions while retaining its existing spacing and placement.
+- Group Jam settings actions, diagnostics, and connection behavior are unchanged.
