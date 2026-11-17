@@ -368,3 +368,9 @@ This section is updated alongside each implementation batch. The specification a
 - **Track details dialog:** metadata rows now stack the label above the value on compact windows. Medium/large layouts retain the existing two-column label/value arrangement.
 - **Behavior preservation:** metadata fields, values, ordering, loading/error states, and dialog dismissal remain unchanged; this is a layout-only adjustment.
 - **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
+
+### Compact local media folders editor actions
+
+- **Local media folders editor:** Save and Cancel actions now stack as full-width buttons on compact windows, with Save first. Medium/large layouts retain the trailing horizontal action row.
+- **Behavior preservation:** folder selection/removal, save eligibility, saving state, and dismiss callbacks are unchanged.
+- **Validation:** source-level review only; Gradle compilation and desktop/mobile runtime checks remain outstanding.
