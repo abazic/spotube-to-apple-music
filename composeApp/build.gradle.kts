@@ -149,6 +149,12 @@ tasks.configureEach {
     }
 }
 
+// Zipline API checks compile against generated UniFFI sources. Wire the producer explicitly
+// so Gradle 9 does not report an implicit dependency on build/generated/uniffi.
+tasks.matching { it.name == "compileKotlinJvmZiplineApiCheck" }.configureEach {
+    dependsOn("buildUniffiBindings")
+}
+
 // Windows/macOS always bundle VLC. On Linux only the self-contained AppImage (-PappImage=true) bundles
 // VLC, GTK and WebKitGTK; deb/rpm use the distro's packages.
 val isLinuxHost = System.getProperty("os.name").lowercase().contains("linux")
