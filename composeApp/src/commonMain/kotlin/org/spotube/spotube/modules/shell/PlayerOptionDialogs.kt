@@ -44,6 +44,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import org.spotube.spotube.core.ui.theming.AppTheme
 
 import com.composeunstyled.Text
+import com.composeunstyled.currentWindowWidthBreakpoint
+import org.spotube.millennium.adaptive.WindowBreakpoints
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -160,18 +162,73 @@ private fun SleepTimerDialog(
                 modifier = Modifier.fillMaxWidth())
         }
         MillenniumDialogFooter {
-            if (remainingMs != null) {
+            SleepTimerDialogActions(
+                hasActiveTimer = remainingMs != null,
+                canStart = minutes.toLongOrNull()?.let { it in 1L..600L } == true,
+                onCancelTimer = onCancelTimer,
+                onDismiss = onDismiss,
+                onStart = onStart)
+        }
+    }
+}
+
+@Composable
+private fun SleepTimerDialogActions(
+    hasActiveTimer: Boolean,
+    canStart: Boolean,
+    onCancelTimer: () -> Unit,
+    onDismiss: () -> Unit,
+    onStart: () -> Unit) {
+    val isLargeScreen = currentWindowWidthBreakpoint() isAtLeast WindowBreakpoints.Medium
+
+    if (isLargeScreen) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (hasActiveTimer) {
                 MillenniumButton(
                     onClick = onCancelTimer,
-                    style = MillenniumButtonStyle.Quiet) { Text(stringResource(Res.string.player_sleep_timer_cancel)) }
+                    style = MillenniumButtonStyle.Quiet,
+                    modifier = Modifier.weight(1f)) {
+                    Text(stringResource(Res.string.player_sleep_timer_cancel))
+                }
             }
             MillenniumButton(
                 onClick = onDismiss,
-                style = MillenniumButtonStyle.Secondary) { Text(stringResource(Res.string.common_close)) }
+                style = MillenniumButtonStyle.Secondary,
+                modifier = Modifier.weight(1f)) {
+                Text(stringResource(Res.string.common_close))
+            }
             MillenniumButton(
                 onClick = onStart,
-                enabled = minutes.toLongOrNull()?.let { it in 1L..600L } == true) {
+                enabled = canStart,
+                modifier = Modifier.weight(1f)) {
                 Text(stringResource(Res.string.player_sleep_timer_start))
+            }
+        }
+    } else {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            MillenniumButton(
+                onClick = onStart,
+                enabled = canStart,
+                modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(Res.string.player_sleep_timer_start))
+            }
+            if (hasActiveTimer) {
+                MillenniumButton(
+                    onClick = onCancelTimer,
+                    style = MillenniumButtonStyle.Quiet,
+                    modifier = Modifier.fillMaxWidth()) {
+                    Text(stringResource(Res.string.player_sleep_timer_cancel))
+                }
+            }
+            MillenniumButton(
+                onClick = onDismiss,
+                style = MillenniumButtonStyle.Secondary,
+                modifier = Modifier.fillMaxWidth()) {
+                Text(stringResource(Res.string.common_close))
             }
         }
     }
