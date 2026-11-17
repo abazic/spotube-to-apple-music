@@ -294,7 +294,7 @@ This section is updated alongside each implementation batch. The specification a
 
 ### Current validation state
 
-- Repository changes are committed to `feature/apple-music-inspired-ui` and tracked by the open draft PR.
+- The initial redesign work was merged into `master`; subsequent follow-up changes are committed directly to `master` (without opening a pull request).
 - Changes in these slices are limited to Compose presentation/layout values and shared UI styling. No plugin manager state, install/remove/login actions, permissions, settings state, persistence, or backend behavior was intentionally modified.
 - `./gradlew :composeApp:check` has not yet been run. Compilation and runtime appearance remain unverified.
 - Remaining work: inspect other reachable shared controls/dialogs and settings/plugin sub-surfaces, perform responsive/light-dark review, run the documented Gradle check, and review the final diff.
@@ -342,3 +342,10 @@ This section is updated alongside each implementation batch. The specification a
 
 - **Album / playlist collection headers:** increased the compact-layout collection title from the body text role to the title role. This strengthens the title-to-metadata hierarchy on narrow screens while retaining the existing desktop scale, line limits, layout, and all actions.
 - **Validation:** source-level review only; Gradle and runtime checks remain outstanding in this GitHub-connected environment.
+
+
+### Responsive playlist form actions
+
+- **Create/edit playlist form:** actions now use a horizontal row on medium/large windows and a full-width vertical stack on narrow windows. The primary Create/Save action is first on narrow layouts, followed by Cancel.
+- **Behavior preservation:** submit and dismiss callbacks, form validation, image-processing guard, submitting/loading state, and labels are unchanged.
+- **Validation:** source-level review only; Gradle compilation and runtime layout checks remain outstanding.
