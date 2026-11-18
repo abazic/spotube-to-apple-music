@@ -23,7 +23,12 @@ import java.util.Locale
 import java.util.TimeZone
 
 internal actual fun jamDeviceTraits(): List<String> {
-    val display = Resources.getSystem().displayMetrics
+    // Local JVM unit tests use Android's stub android.jar, where Resources.getSystem()
+    // throws. Screen dimensions are optional fingerprint traits, not a prerequisite.
+    val display = runCatching { Resources.getSystem().displayMetrics }.getOrNull()
+    val screen = display?.let {
+        "${minOf(it.widthPixels, it.heightPixels)}x${maxOf(it.widthPixels, it.heightPixels)}@${it.densityDpi}"
+    }.orEmpty()
     return listOf(
         "android",
         Build.MANUFACTURER,
@@ -31,7 +36,7 @@ internal actual fun jamDeviceTraits(): List<String> {
         Build.DEVICE,
         Build.VERSION.RELEASE,
         Build.VERSION.SDK_INT.toString(),
-        "${minOf(display.widthPixels, display.heightPixels)}x${maxOf(display.widthPixels, display.heightPixels)}@${display.densityDpi}",
+        screen,
         Locale.getDefault().toLanguageTag(),
         TimeZone.getDefault().id)
 }
