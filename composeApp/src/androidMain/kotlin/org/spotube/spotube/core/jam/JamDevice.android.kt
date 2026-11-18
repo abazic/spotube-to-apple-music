@@ -31,10 +31,10 @@ internal actual fun jamDeviceTraits(): List<String> {
     }.orEmpty()
     return listOf(
         "android",
-        Build.MANUFACTURER,
-        Build.MODEL,
-        Build.DEVICE,
-        Build.VERSION.RELEASE,
+        Build.MANUFACTURER.orEmpty(),
+        Build.MODEL.orEmpty(),
+        Build.DEVICE.orEmpty(),
+        Build.VERSION.RELEASE.orEmpty(),
         Build.VERSION.SDK_INT.toString(),
         screen,
         Locale.getDefault().toLanguageTag(),
