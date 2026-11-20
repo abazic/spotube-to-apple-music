@@ -382,3 +382,44 @@ This section is updated alongside each implementation batch. The specification a
 ### Settings — Group Jam explanatory note
 - The server note now uses the shared small-body typography and secondary text color, matching other settings descriptions while retaining its existing spacing and placement.
 - Group Jam settings actions, diagnostics, and connection behavior are unchanged.
+
+
+## 17. Progress update — repository changes and CI follow-up (2026-11-18)
+
+This update supplements the redesign progress above. **It does not remove, replace, or mark the remaining redesign phases as complete.** The UI redesign is still in progress; these commits mainly address project verification and JVM test reliability.
+
+
+### Recent CI/build fixes committed to `master`
+
+- **Android 37 SDK setup:** install Android platform 37 and build-tools 37.0.0, and normalize the SDK platform directory for Android Gradle Plugin compatibility.
+- **ComposeNativeWebView dependency:** replace the unavailable `0.1.0-SNAPSHOT` dependency with published `1.0.3`.
+- **UniFFI task ordering:** explicitly make the Zipline JVM API-check compilation depend on `buildUniffiBindings`.
+- **JVM audio test setup:** install VLC runtime packages required by JVM audio tests and generate five short WAV fixtures in CI.
+- **Jam name generation:** provide fallback name data and formatting when Compose UI resources are unavailable to the JVM tests.
+- **Android device-trait tests:** guard access to Android system display metrics in JVM tests and safely omit unavailable screen information; normalize optional Build fields.
+
+
+### CI validation status — latest recorded run
+
+- Workflow: **Gradle verification**; run [44314587680](https://github.com/abazic/spotube-to-apple-music/actions/runs/44314587680).
+- The JDK setup, Android SDK setup, SDK-path normalization, VLC runtime installation, and audio-fixture generation steps completed successfully.
+- The Gradle verification step **failed**. The current known test report from the preceding failure showed 258 tests with 27 failures; subsequent fixes addressed JVM audio tests and JamNames/JamSecurity and a local media folders editor test, but the latest run still needs its failure details investigated and corrected.
+- Do not treat CI as passing, and do not disable failing tests to make the workflow green. Continue fixing the underlying failures and rerun verification.
+- These build/CI fixes are not evidence that the UI redesign itself is visually or behaviorally verified.
+
+
+### Remaining redesign work — still open
+
+The following work from the original plan remains in scope and must not be dropped:
+
+- Inspect remaining reachable shared controls, dialogs, settings/plugin sub-surfaces, and screens for coverage gaps.
+- Review responsive behavior at compact, intermediate, and desktop widths; verify light and dark themes.
+- Perform visual/runtime checks on supported platforms where feasible.
+- Run `./gradlew :composeApp:check` / the workflow verification and resolve outstanding failures.
+- Review the final diff for presentation-only scope and behavior preservation.
+- Complete the final report with finished phases, files/surfaces changed, checks and outcomes, and unresolved gaps.
+
+
+### Status interpretation
+
+UI polish entries above are **implemented slices based on source changes**, not a claim that the entire redesign is complete. Source review has been performed for those slices; runtime appearance and full build verification remain incomplete. Keep all unfinished items visible until verified and explicitly closed.
